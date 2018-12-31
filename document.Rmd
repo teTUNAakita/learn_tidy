@@ -9,22 +9,38 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## RstudioとGitHubの連携をしつつ、tidyverseの使い方の勉強
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+連携については、[ここ](https://qiita.com/uri/items/6b94609f156173ed43ed)を参考にしました。
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## poulation dynamics
 
-```{r cars}
-summary(cars)
+```{r, include=FALSE}
+library(tidyverse)
 ```
 
-## Including Plots
+```{r}
+f <- function(x, r, K){
+    r * x * (1 - x / K) + x
+}
 
-You can also embed plots, for example:
+simulation <- function(r, K = 100, T = 100, x1 = 10){
+  
+  # Initialize
+  x <- numeric(T)
+  x[1] <- x1
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+  # Simulate
+  for(t in 1:(T-1)){
+    x[t+1] <- f(x = x[t], r, K)
+  }
+  
+  data_frame(time = 1:T,  population = x)
+}
+simulation(r = 2.5)  %>%
+  ggplot(aes(time, population)) + geom_line()
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+data.frame(time = 1:5, pop = 50) %>% 
+  mutate(pop = accumulate(pop, ~.x * 1.1))
+```
