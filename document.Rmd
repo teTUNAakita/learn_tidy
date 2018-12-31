@@ -15,11 +15,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## poulation dynamics
 
+参考にしたURL
+https://www.weirdfishes.blog/#example-model-predicting-salmon
+https://stackoverflow.com/questions/40095463/simulating-a-timeseries-in-dplyr-instead-of-using-a-for-loop/40096347
+https://ds421.github.io/rcds/lectures/popdyn-live-coding
+
+
 ```{r, include=FALSE}
 library(tidyverse)
 ```
 
 ```{r}
+alpha <- 1000
+
+cross_df(list(ssb = 0:1000, h = c(0.2,0.6,1))) %>% 
+  mutate(recruits = (0.8 * alpha * h * ssb) / (
+            0.2 * alpha * (1 - h) +
+              (h - 0.2) * ssb
+          )) %>% 
+  ggplot(aes(ssb, recruits, color = factor(h))) + 
+  geom_line() + 
+  scale_color_discrete(name = 'steepness')
+
+
 f <- function(x, r, K){
     r * x * (1 - x / K) + x
 }
