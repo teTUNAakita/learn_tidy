@@ -20,6 +20,27 @@ https://www.weirdfishes.blog/#example-model-predicting-salmon
 https://stackoverflow.com/questions/40095463/simulating-a-timeseries-in-dplyr-instead-of-using-a-for-loop/40096347
 https://ds421.github.io/rcds/lectures/popdyn-live-coding
 
+## 次元数が大きい（例：time, age, fleet, runの４次元など）データを作成するとき、tidyデータとして扱うのは効率的なのか？？
+
+```{r}
+# 古典的な方法
+year_max <- 4
+age_max <- 3
+fleet_max <- 2 
+#pop_num <- as.data.frame( array(0, dim=c(year_max, age_max, fleet_max)))
+pop_update <- function(num,age) {
+}
+pop_num <- array(0, dim=c(year_max, fleet_max, age_max))
+pop_num[1,,] <- rpois(n = age_max*fleet_max, lambda = 10) # 初期化
+for (y in 1:fleet_max) {
+  for (f in 1:year_max) {
+    for (a in 1:age_max) {
+    }
+  }
+}
+
+```
+
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -30,16 +51,16 @@ alpha <- 1000
 
 cross_df(list(ssb = 0:1000, h = c(0.2,0.6,1))) %>% 
   mutate(recruits = (0.8 * alpha * h * ssb) / (
-            0.2 * alpha * (1 - h) +
-              (h - 0.2) * ssb
-          )) %>% 
+    0.2 * alpha * (1 - h) +
+      (h - 0.2) * ssb
+  )) %>% 
   ggplot(aes(ssb, recruits, color = factor(h))) + 
   geom_line() + 
   scale_color_discrete(name = 'steepness')
 
 
 f <- function(x, r, K){
-    r * x * (1 - x / K) + x
+  r * x * (1 - x / K) + x
 }
 
 simulation <- function(r, K = 100, T = 100, x1 = 10){
@@ -47,7 +68,7 @@ simulation <- function(r, K = 100, T = 100, x1 = 10){
   # Initialize
   x <- numeric(T)
   x[1] <- x1
-
+  
   # Simulate
   for(t in 1:(T-1)){
     x[t+1] <- f(x = x[t], r, K)
