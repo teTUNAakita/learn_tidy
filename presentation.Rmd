@@ -1,0 +1,49 @@
+---
+title: "Rmdからpptxはまだ難しい"
+author: 改行できるのか？（シンプルすぎる）
+date: Jan 2, 2019
+output: powerpoint_presentation
+---
+
+# 縦横の比率がおかしい
+
+
+# ローカルの画像を表示するのが困難
+
+
+# marpを試してみる
+
+
+## いいいいいいい
+
+
+$$I_{xx}=\int\int_Ry^2f(x,y)\cdot{}dydx$$
+
+
+- いいい
+  - うううう
+
+## Breakfast
+
+- Eat eggs
+- Drink coffee
+
+# In the evening１１１
+
+# In the evening
+
+## Dinner
+
+- Eat spaghetti
+- Drink wine
+
+---
+
+```{r, cars, fig.cap="A scatterplot.", echo=FALSE}
+plot(cars)
+```
+
+## Going to sleep
+
+- Get in bed
+- Count sheep
